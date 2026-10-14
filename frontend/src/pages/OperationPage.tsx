@@ -7,36 +7,60 @@ import {
 } from "lucide-react";
 
 import StatCard from "../components/dashboard/StatCard";
+import { operationsMockData } from "../mocks/operations";
+import AlertItem from "../components/dashboard/AlertItem";
 
 export default function OperationsPage() {
+
+
+
+const { vehicles, trips, demand, alerts } = operationsMockData;
+
+const availableBuses = vehicles.filter(
+  (vehicle) => vehicle.status === "available"
+).length;
+
+const scheduledTrips = trips.filter(
+  (trip) => trip.status === "scheduled"
+).length;
+
+const passengerDemand = demand.reduce(
+  (total, record) => total + record.passengerCount,
+  0
+);
+
+const activeAlerts = alerts.filter(
+  (alert) => alert.status === "active"
+).length;
+
+
     
 const statCards = [
   {
     title: "Available Buses",
-    value: "—",
-    description: "Vehicle availability from the network data",
+    value: String(availableBuses),
+    description: "Vehicles marked available in sample data",
     icon: BusFront,
   },
   {
     title: "Scheduled Trips",
-    value: "—",
-    description: "Trips recorded in the schedule",
+    value: String(scheduledTrips),
+    description: "Trips marked as scheduled",
     icon: CalendarDays,
   },
   {
     title: "Passenger Demand",
-    value: "—",
-    description: "Demand reported by the dataset",
+    value: String(passengerDemand),
+    description: "Total across sample demand records",
     icon: Users,
   },
   {
     title: "Active Alerts",
-    value: "—",
-    description: "Alerts reported by the network",
+    value: String(activeAlerts),
+    description: "Alerts currently marked active",
     icon: BellRing,
   },
 ];
-
   return (
     <div className="space-y-6">
 
@@ -83,10 +107,15 @@ const statCards = [
         </div>
 
         <div className="min-h-52 rounded-lg border border-border bg-white p-5">
-          <h2 className="font-semibold">Active Alerts</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Transport alerts from the dataset will be displayed here.
-          </p>
+          <h2 className="font-semibold  mb-4">Active Alerts</h2>
+
+          <div className="space-y-3">
+  {operationsMockData.alerts
+    .filter((alert) => alert.status === "active")
+    .map((alert) => (
+      <AlertItem key={alert.id} alert={alert} />
+    ))}
+</div>
         </div>
       </section>
     </div>
