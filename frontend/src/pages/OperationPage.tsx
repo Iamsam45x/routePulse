@@ -87,7 +87,11 @@ const statCards = [
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="min-h-72 rounded-lg border border-border bg-white p-5 xl:col-span-2">
           <h2 className="font-semibold">Campus Transport Network</h2>
-<CampusMap />
+<CampusMap
+  stops={operationsMockData.stops}
+  routes={operationsMockData.routes}
+  vehicles={operationsMockData.vehicles}
+/>
         </div>
 
         <div className="min-h-72 rounded-lg border border-border bg-white p-5">

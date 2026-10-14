@@ -2,23 +2,24 @@
 import type { OperationsData } from "../types/operations";
 
 export const operationsMockData: OperationsData = {
+
 routes: [
   {
     id: "R1",
     name: "Route 1 – North & North-East",
-    stopIds: ["S01", "S02", "S03", "S04", "S05"],
+    stopIds: ["S02", "S03", "S05", "S04", "S01"],
     status: "active",
   },
   {
     id: "R2",
     name: "Route 2 – East & South",
-    stopIds: ["S06", "S07", "S08", "S09", "S10"],
+    stopIds: ["S06", "S07", "S08", "S09", "S10", "S01"],
     status: "delayed",
   },
   {
     id: "R3",
     name: "Route 3 – West & North-West",
-    stopIds: ["S11", "S12", "S13", "S14", "S15"],
+    stopIds: ["S12", "S13", "S14", "S15", "S11", "S01"],
     status: "active",
   },
 ],
@@ -118,12 +119,33 @@ stops: [
 
 
 
-  vehicles: [
-    { id: "BUS01", capacity: 40, status: "available" },
-    { id: "BUS02", capacity: 40, status: "in-service", routeId: "R1" },
-    { id: "BUS03", capacity: 30, status: "in-service", routeId: "R2" },
-    { id: "BUS04", capacity: 30, status: "unavailable" },
-  ],
+
+vehicles: [
+  { id: "BUS01", capacity: 40, status: "available" },
+  {
+    id: "BUS02",
+    capacity: 40,
+    status: "in-service",
+    routeId: "R1",
+    currentStopId: "S02",
+  },
+  {
+    id: "BUS03",
+    capacity: 30,
+    status: "in-service",
+    routeId: "R2",
+    currentStopId: "S06",
+  },
+  { id: "BUS04", capacity: 30, status: "unavailable" },
+  {
+    id: "BUS05",
+    capacity: 30,
+    status: "in-service",
+    routeId: "R3",
+    currentStopId: "S12",
+  },
+],
+
 
   trips: [
     {
