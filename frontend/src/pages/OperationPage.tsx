@@ -10,6 +10,7 @@ import StatCard from "../components/dashboard/StatCard";
 import { operationsMockData } from "../mocks/operations";
 import AlertItem from "../components/dashboard/AlertItem";
 import RouteStatusTable from "../components/dashboard/RouteStatusTable";
+import DemandCapacityChart from "../components/dashboard/DemandCapacityChart";
 
 export default function OperationsPage() {
 
@@ -92,9 +93,12 @@ const statCards = [
 
         <div className="min-h-72 rounded-lg border border-border bg-white p-5">
           <h2 className="font-semibold">Demand vs. Capacity</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Passenger demand and vehicle capacity chart will be displayed here.
-          </p>
+<DemandCapacityChart
+  demand={operationsMockData.demand}
+  stops={operationsMockData.stops}
+  vehicles={operationsMockData.vehicles}
+  routes={operationsMockData.routes}
+/>
         </div>
       </section>
 
