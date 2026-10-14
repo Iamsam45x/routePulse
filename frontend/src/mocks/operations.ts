@@ -17,44 +17,46 @@ export const operationsMockData: OperationsData = {
     },
   ],
 
-  stops: [
-    {
-      id: "S01",
-      name: "Main Gate",
-      latitude: 21.15,
-      longitude: 79.05,
-    },
-    {
-      id: "S02",
-      name: "Academic Block",
-      latitude: 21.152,
-      longitude: 79.053,
-    },
-    {
-      id: "S03",
-      name: "Hostel",
-      latitude: 21.155,
-      longitude: 79.056,
-    },
-    {
-      id: "S04",
-      name: "Library",
-      latitude: 21.149,
-      longitude: 79.052,
-    },
-    {
-      id: "S05",
-      name: "Sports Complex",
-      latitude: 21.147,
-      longitude: 79.055,
-    },
-    {
-      id: "S06",
-      name: "North Gate",
-      latitude: 21.153,
-      longitude: 79.059,
-    },
-  ],
+ 
+stops: [
+  {
+    id: "S01",
+    name: "Main Gate",
+    latitude: 12.8976,
+    longitude: 77.6002,
+  },
+  {
+    id: "S02",
+    name: "Academic Block",
+    latitude: 12.8981,
+    longitude: 77.6008,
+  },
+  {
+    id: "S03",
+    name: "Hostel",
+    latitude: 12.8969,
+    longitude: 77.6010,
+  },
+  {
+    id: "S04",
+    name: "Library",
+    latitude: 12.8983,
+    longitude: 77.5997,
+  },
+  {
+    id: "S05",
+    name: "Sports Complex",
+    latitude: 12.8967,
+    longitude: 77.5994,
+  },
+  {
+    id: "S06",
+    name: "North Gate",
+    latitude: 12.8990,
+    longitude: 77.6003,
+  },
+],
+
 
   vehicles: [
     { id: "BUS01", capacity: 40, status: "available" },

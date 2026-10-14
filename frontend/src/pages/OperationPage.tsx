@@ -11,6 +11,7 @@ import { operationsMockData } from "../mocks/operations";
 import AlertItem from "../components/dashboard/AlertItem";
 import RouteStatusTable from "../components/dashboard/RouteStatusTable";
 import DemandCapacityChart from "../components/dashboard/DemandCapacityChart";
+import CampusMap from "../components/map/CampusMap";
 
 export default function OperationsPage() {
 
@@ -86,9 +87,7 @@ const statCards = [
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="min-h-72 rounded-lg border border-border bg-white p-5 xl:col-span-2">
           <h2 className="font-semibold">Campus Transport Network</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Route and stop map will be displayed here.
-          </p>
+<CampusMap />
         </div>
 
         <div className="min-h-72 rounded-lg border border-border bg-white p-5">
