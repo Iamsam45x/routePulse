@@ -9,6 +9,7 @@ import {
 import StatCard from "../components/dashboard/StatCard";
 import { operationsMockData } from "../mocks/operations";
 import AlertItem from "../components/dashboard/AlertItem";
+import RouteStatusTable from "../components/dashboard/RouteStatusTable";
 
 export default function OperationsPage() {
 
@@ -101,9 +102,11 @@ const statCards = [
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="min-h-52 rounded-lg border border-border bg-white p-5">
           <h2 className="font-semibold">Route Status</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Route and scheduled-trip details will be displayed here.
-          </p>
+<RouteStatusTable 
+  routes={operationsMockData.routes}
+  vehicles={operationsMockData.vehicles}
+  trips={operationsMockData.trips}
+/>
         </div>
 
         <div className="min-h-52 rounded-lg border border-border bg-white p-5">
