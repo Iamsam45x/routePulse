@@ -104,7 +104,7 @@ const nextArrival = selectedStop
 
   return (
     <div className="space-y-6">
-      {/* Transport KPI cards */}
+
       <section aria-label="Transport metrics">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {statCards.map((card) => (
