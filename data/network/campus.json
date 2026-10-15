@@ -307,7 +307,7 @@
         "shuttle"
       ],
       "min_headway_min": 20,
-      "max_headway_min": 40
+      "max_headway_min": 60
     },
     {
       "route_id": "R02",
@@ -337,7 +337,7 @@
         "shuttle"
       ],
       "min_headway_min": 20,
-      "max_headway_min": 40
+      "max_headway_min": 60
     },
     {
       "route_id": "R03",
@@ -364,7 +364,7 @@
         "shuttle"
       ],
       "min_headway_min": 20,
-      "max_headway_min": 40
+      "max_headway_min": 60
     },
     {
       "route_id": "R04",
@@ -394,7 +394,7 @@
         "shuttle"
       ],
       "min_headway_min": 20,
-      "max_headway_min": 40
+      "max_headway_min": 60
     },
     {
       "route_id": "R05",
@@ -420,7 +420,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     },
     {
@@ -450,7 +450,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     },
     {
@@ -477,7 +477,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     },
     {
@@ -507,7 +507,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     },
     {
@@ -534,7 +534,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     },
     {
@@ -564,7 +564,7 @@
       "allowed_vehicle_types": [
         "shuttle"
       ],
-      "min_headway_min": 30,
+      "min_headway_min": 20,
       "max_headway_min": 60
     }
   ],
@@ -785,7 +785,7 @@
       "vehicle_type": "shuttle",
       "available_from_min": 420,
       "available_until_min": 1320,
-      "initial_stop_id": "S01",
+      "initial_stop_id": "S04",
       "turnaround_min": 5,
       "cost_per_km": 30.29
     },
@@ -795,7 +795,7 @@
       "vehicle_type": "shuttle",
       "available_from_min": 420,
       "available_until_min": 1320,
-      "initial_stop_id": "S01",
+      "initial_stop_id": "S07",
       "turnaround_min": 5,
       "cost_per_km": 19.2
     },
@@ -805,7 +805,7 @@
       "vehicle_type": "shuttle",
       "available_from_min": 420,
       "available_until_min": 1320,
-      "initial_stop_id": "S01",
+      "initial_stop_id": "S13",
       "turnaround_min": 5,
       "cost_per_km": 29.42
     },
@@ -815,7 +815,7 @@
       "vehicle_type": "shuttle",
       "available_from_min": 420,
       "available_until_min": 1320,
-      "initial_stop_id": "S01",
+      "initial_stop_id": "S25",
       "turnaround_min": 5,
       "cost_per_km": 28.72
     }
