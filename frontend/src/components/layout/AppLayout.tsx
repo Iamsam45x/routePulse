@@ -9,6 +9,8 @@ import {
 import OperationsPage from "../../pages/OperationPage";
 import { operationsMockData } from "../../mocks/operations";
 import AlertItem from "../dashboard/AlertItem";
+import RecoveryPlanner from "../../pages/RecoveryPlanner";
+import PerformanceLab from "../../pages/PerformanceLab";
 
 export default function AppLayout() {
   const [activePage, setActivePage] = useState<PageId>("operations");
@@ -127,8 +129,7 @@ export default function AppLayout() {
             )}
           </div>
         </header>
-
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+<main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
           <div className="mb-6">
             <h1 className="text-2xl font-semibold tracking-tight">
               {activeItem?.label ?? "Operations"}
@@ -146,15 +147,17 @@ export default function AppLayout() {
             </p>
           </div>
 
-          {activePage === "operations" ? (
-            <OperationsPage />
-          ) : (
-            <div className="rounded-lg border border-border bg-white p-6">
-              <p className="text-sm text-muted-foreground">
-                {activeItem?.label} page content will be implemented here.
-              </p>
-            </div>
-          )}
+
+{activePage === "operations" ? (
+  <OperationsPage />
+) : activePage === "recovery-planner" ? (
+  <RecoveryPlanner
+    onViewPerformance={() => handleNavigate("performance-lab")}
+  />
+) : (
+  <PerformanceLab />
+)}
+
         </main>
       </div>
     </div>
