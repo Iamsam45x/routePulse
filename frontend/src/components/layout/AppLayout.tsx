@@ -150,7 +150,9 @@ export default function AppLayout() {
 {activePage === "operations" ? (
   <OperationsPage />
 ) : activePage === "recovery-planner" ? (
-  <RecoveryPlanner />
+  <RecoveryPlanner
+    onViewPerformance={() => handleNavigate("performance-lab")}
+  />
 ) : (
   <div className="rounded-lg border border-border bg-white p-6">
     <p className="text-sm text-muted-foreground">

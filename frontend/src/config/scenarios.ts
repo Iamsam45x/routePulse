@@ -1,4 +1,3 @@
-
 import type { Scenario } from "../types/scenarios";
 
 export const scenarios: Scenario[] = [
@@ -9,6 +8,10 @@ export const scenarios: Scenario[] = [
     description:
       "Baseline transportation demand and vehicle availability.",
     type: "normal",
+    demandMultiplierPercent: 0,
+    availableVehicles: 4,
+    affectedPeriod: "08:00–10:00",
+    evaluationHorizonMin: 120,
   },
   {
     id: "demand_spike",
@@ -17,6 +20,10 @@ export const scenarios: Scenario[] = [
     description:
       "Passenger demand increases during peak periods.",
     type: "demand-spike",
+    demandMultiplierPercent: 50,
+    availableVehicles: 4,
+    affectedPeriod: "08:00–10:00",
+    evaluationHorizonMin: 120,
   },
   {
     id: "vehicle_unavailable",
@@ -25,5 +32,9 @@ export const scenarios: Scenario[] = [
     description:
       "One vehicle becomes unavailable during the operating window.",
     type: "vehicle-unavailable",
+    demandMultiplierPercent: 0,
+    availableVehicles: 3,
+    affectedPeriod: "08:15–09:45",
+    evaluationHorizonMin: 120,
   },
 ];
