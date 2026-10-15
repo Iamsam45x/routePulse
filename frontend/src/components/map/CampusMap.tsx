@@ -1,13 +1,14 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { divIcon, latLngBounds } from "leaflet";
 import {
   CircleMarker,
   MapContainer,
   Marker,
+  Pane,
   Polyline,
   Popup,
   TileLayer,
+  Tooltip,
   useMap,
 } from "react-leaflet";
 import { Minus, Plus, RotateCcw } from "lucide-react";
@@ -19,6 +20,8 @@ interface CampusMapProps {
   stops: Stop[];
   routes: Route[];
   vehicles: Vehicle[];
+  selectedStopId: string | null;
+  onStopSelect: (stopId: string) => void;
 }
 
 interface RouteLinesProps {
@@ -41,7 +44,9 @@ const routeColors: Record<string, string> = {
   R1: "#2563EB",
   R2: "#16A34A",
   R3: "#D97706",
+  R4: "#9333EA",
 };
+
 
 const busIcon = divIcon({
   className: "",
@@ -74,8 +79,8 @@ const busIcon = divIcon({
     </div>
   `,
   iconSize: [38, 38],
-  iconAnchor: [19, 19],
-  popupAnchor: [0, -20],
+  iconAnchor: [19, 52],
+  popupAnchor: [0, -50],
 });
 
 function RouteLines({
@@ -170,20 +175,13 @@ function RouteLines({
             positions={positions}
             pathOptions={{
               color: routeColors[route.id] ?? "#64748B",
-              weight: 5,
-              opacity: 0.85,
+              weight: 4,
+              opacity: 0.7,
             }}
             eventHandlers={{
               click: () => onRouteSelect(route.id),
             }}
-          >
-            <Popup>
-              <div>
-                <p className="font-semibold">{route.name}</p>
-                <p>{positions.length} road-path points</p>
-              </div>
-            </Popup>
-          </Polyline>
+          />
         );
       })}
     </>
@@ -198,8 +196,7 @@ function FitMapToStops({ stops }: { stops: Stop[] }) {
 
     const bounds = latLngBounds(
       stops.map(
-        (stop) =>
-          [stop.latitude, stop.longitude] as [number, number],
+        (stop) => [stop.latitude, stop.longitude] as [number, number],
       ),
     );
 
@@ -230,8 +227,7 @@ function MapControls({ allStops, onReset }: MapControlsProps) {
 
     const bounds = latLngBounds(
       allStops.map(
-        (stop) =>
-          [stop.latitude, stop.longitude] as [number, number],
+        (stop) => [stop.latitude, stop.longitude] as [number, number],
       ),
     );
 
@@ -278,6 +274,8 @@ export default function CampusMap({
   stops,
   routes,
   vehicles,
+  selectedStopId,
+  onStopSelect,
 }: CampusMapProps) {
   const [selectedRouteId, setSelectedRouteId] = useState("all");
 
@@ -285,12 +283,18 @@ export default function CampusMap({
     (route) => route.id === selectedRouteId,
   );
 
-  const visibleStops =
-    selectedRouteId === "all"
-      ? stops
-      : stops.filter((stop) =>
-          selectedRoute?.stopIds.includes(stop.id),
-        );
+  
+  const visibleStops = useMemo(
+    () =>
+      selectedRouteId === "all"
+        ? stops
+        : stops.filter((stop) =>
+            routes
+              .find((route) => route.id === selectedRouteId)
+              ?.stopIds.includes(stop.id),
+          ),
+    [stops, routes, selectedRouteId],
+  );
 
   const visibleVehicles = vehicles.filter((vehicle) => {
     if (vehicle.status !== "in-service" || !vehicle.currentStopId) {
@@ -298,8 +302,7 @@ export default function CampusMap({
     }
 
     return (
-      selectedRouteId === "all" ||
-      vehicle.routeId === selectedRouteId
+      selectedRouteId === "all" || vehicle.routeId === selectedRouteId
     );
   });
 
@@ -363,55 +366,88 @@ export default function CampusMap({
 
           <FitMapToStops stops={visibleStops} />
 
-          <RouteLines
-            routes={routes}
-            stops={stops}
-            selectedRouteId={selectedRouteId}
-            onRouteSelect={setSelectedRouteId}
-          />
+   
+          <Pane name="route-lines" style={{ zIndex: 410 }}>
+            <RouteLines
+              routes={routes}
+              stops={stops}
+              selectedRouteId={selectedRouteId}
+              onRouteSelect={setSelectedRouteId}
+            />
+          </Pane>
 
           <MapControls
             allStops={stops}
             onReset={() => setSelectedRouteId("all")}
           />
 
-          {visibleStops.map((stop) => {
-            const isUniversityTerminal = stop.id === "S01";
 
-            return (
-              <CircleMarker
-                key={stop.id}
-                center={[stop.latitude, stop.longitude]}
-                radius={isUniversityTerminal ? 10 : 7}
-                pathOptions={{
-                  color: "#FFFFFF",
-                  weight: isUniversityTerminal ? 3 : 2,
-                  fillColor: isUniversityTerminal
-                    ? "#DC2626"
-                    : selectedRoute
-                      ? routeColors[selectedRoute.id] ?? "#64748B"
-                      : "#2563EB",
-                  fillOpacity: 1,
-                }}
-              >
-                <Popup>
-                  <div>
-                    <p className="font-semibold">{stop.name}</p>
-                    <p>
-                      {stop.latitude.toFixed(5)},{" "}
-                      {stop.longitude.toFixed(5)}
-                    </p>
-                    {isUniversityTerminal && (
-                      <p>University Terminal — Route Destination</p>
-                    )}
-                    {selectedRoute && (
-                      <p>Route: {selectedRoute.name}</p>
-                    )}
-                  </div>
-                </Popup>
-              </CircleMarker>
-            );
-          })}
+          <Pane name="stops" style={{ zIndex: 500 }}>
+            {visibleStops.map((stop) => {
+              const isUniversityTerminal = stop.id === "S01";
+              const isSelected = stop.id === selectedStopId;
+
+              const stopRoute = routes.find(
+                (r) => r.stopIds.includes(stop.id) && stop.id !== "S01",
+              );
+
+              const routeColor =
+                routeColors[stopRoute?.id ?? ""] ?? "#64748B";
+
+              return (
+                <div key={stop.id}>
+                
+                  <CircleMarker
+                    center={[stop.latitude, stop.longitude]}
+                    radius={isSelected ? 13 : isUniversityTerminal ? 12 : 9}
+                    interactive={false}
+                    pathOptions={{
+                      color: "#FFFFFF",
+                      weight: isSelected ? 4 : 3,
+                      fillColor: isSelected
+                        ? "#0F172A"
+                        : isUniversityTerminal
+                          ? "#DC2626"
+                          : routeColor,
+                      fillOpacity: 1,
+                    }}
+                  />
+
+             
+                  <CircleMarker
+                    center={[stop.latitude, stop.longitude]}
+                    radius={18}
+                    eventHandlers={{
+                      click: () => onStopSelect(stop.id),
+                    }}
+                    pathOptions={{
+                      stroke: false,
+                      fillColor: "#000000",
+                      fillOpacity: 0,
+                    }}
+                  >
+                    <Tooltip direction="top" offset={[0, -12]}>
+                      {stop.name}
+                    </Tooltip>
+
+                    <Popup>
+                      <div>
+                        <p className="font-semibold">{stop.name}</p>
+                        <p>
+                          {stop.latitude.toFixed(5)},{" "}
+                          {stop.longitude.toFixed(5)}
+                        </p>
+                        {isUniversityTerminal && (
+                          <p>University Terminal — all routes end here</p>
+                        )}
+                        {stopRoute && <p>Route: {stopRoute.name}</p>}
+                      </div>
+                    </Popup>
+                  </CircleMarker>
+                </div>
+              );
+            })}
+          </Pane>
 
           {visibleVehicles.map((vehicle) => {
             const currentStop = stops.find(
@@ -434,9 +470,7 @@ export default function CampusMap({
                 <Popup>
                   <div>
                     <p className="font-semibold">{vehicle.id}</p>
-                    <p>
-                      Route: {assignedRoute?.name ?? "Unassigned"}
-                    </p>
+                    <p>Route: {assignedRoute?.name ?? "Unassigned"}</p>
                     <p>Current stop: {currentStop.name}</p>
                     <p>Destination: IIMB Main Gate</p>
                     <p>Capacity: {vehicle.capacity} passengers</p>
