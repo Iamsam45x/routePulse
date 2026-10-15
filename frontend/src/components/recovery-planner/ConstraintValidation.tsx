@@ -34,7 +34,7 @@ export default function ConstraintValidation({ result }: Props) {
         </p>
         <p className="mt-1 text-sm text-secondary">
           {noViolations
-            ? "All listed constraints passed in this mock result."
+            ? "No hard constraints were violated."
             : "One or more hard constraints were violated."}
         </p>
       </div>

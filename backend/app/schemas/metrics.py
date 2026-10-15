@@ -5,24 +5,44 @@ simulation run (see `Wild Bugs.md` "Results and audit records").
 """
 from __future__ import annotations
 
-<<<<<<< HEAD
 from pydantic import BaseModel, Field
-=======
-from pydantic import BaseModel
->>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
 
 
 class Metrics(BaseModel):
-    eta_mae_min: float
-    avg_wait_min: float
-    unserved_passengers: int
-    missed_connections: int
-    capacity_violations: int
-    vehicle_km: float
+    """Outcome metrics from a simulation run.
+
+    The first six fields are the canonical contract from ``Wild Bugs.md``.
+    ``eta_mae_min`` is ``None`` when no ETA predictions were supplied (see
+    ``eta_observations``); predictions are never fabricated just to populate it.
+    The remaining fields are simulator extensions with defaults so existing
+    callers keep working.
+    """
+
+    eta_mae_min: float | None = None
+    avg_wait_min: float = 0.0
+    unserved_passengers: int = 0
+    missed_connections: int = 0
+    capacity_violations: int = 0
+    vehicle_km: float = 0.0
+
+    # --- simulator extensions ------------------------------------------- #
+    served_passengers: int = 0
+    abandoned_passengers: int = 0
+    total_demand: int = 0
+    completed_journeys: int = 0
+    median_wait_min: float = 0.0
+    max_wait_min: float = 0.0
+    passengers_affected_by_breakdowns: int = 0
+    breakdown_count: int = 0
+    vehicle_departures: int = 0
+    vehicle_arrivals: int = 0
+    operating_cost: float = 0.0
+    cost_available: bool = True
+    max_segment_load: int = 0
+    eta_observations: int = 0
 
 
 class ValidationReport(BaseModel):
-<<<<<<< HEAD
     """Independent validation result.
 
     ``feasible`` is true only when there are no hard violations *and* no
@@ -36,11 +56,6 @@ class ValidationReport(BaseModel):
     hard_violation_count: int
     violations: list[dict] = Field(default_factory=list)
     unverified_constraints: list[dict] = Field(default_factory=list)
-=======
-    feasible: bool
-    hard_violation_count: int
-    violations: list[dict] = []
->>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
 
 
 class RunResult(BaseModel):

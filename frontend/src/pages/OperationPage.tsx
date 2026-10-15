@@ -287,7 +287,7 @@ const nextArrival = selectedStop
           />
         </div>
       </section>
-\
+
       <section className="rounded-xl border border-border bg-white p-4 sm:p-5">
         <h2 className="mb-4 font-semibold text-foreground">
           Active Alerts

@@ -3,12 +3,8 @@
 OWNED BY: validation workstream (P0 — never cut).
 
 ``validate_plan()`` must NOT rely on the optimizer's own feasibility status. It
-<<<<<<< HEAD
 independently recomputes every hard constraint and returns structured
 violations. Required checks (from ``Wild Bugs.md``):
-=======
-returns structured violations. Required checks (from ``Wild Bugs.md``):
->>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
 
 - every scheduled trip has exactly one valid vehicle assignment
 - vehicle types match route requirements
@@ -20,7 +16,6 @@ returns structured violations. Required checks (from ``Wild Bugs.md``):
 - required service constraints are respected
 
 Runs on the baseline too; pre-existing baseline violations must be reported.
-<<<<<<< HEAD
 
 Design notes
 ------------
@@ -488,12 +483,3 @@ def validate_plan(
         "violations": violations,
         "unverified_constraints": unverified,
     }
-=======
-"""
-from __future__ import annotations
-
-
-def validate_plan(plan, network) -> dict:
-    """Validate a plan and return ``{feasible, hard_violation_count, violations}``."""
-    raise NotImplementedError("TODO(validation): implement validate_plan()")
->>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52

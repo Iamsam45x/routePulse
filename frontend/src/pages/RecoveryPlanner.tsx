@@ -3,6 +3,7 @@ import {
   RotateCcw,
   ShieldCheck,
   CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 
 import { scenarios } from "../config/scenarios";
@@ -12,7 +13,7 @@ import OptimizationProgress from "../components/recovery-planner/OptimizationPro
 import TimetableComparison from "../components/recovery-planner/TimetableComparison";
 import ConstraintValidation from "../components/recovery-planner/ConstraintValidation";
 
-import { useMockOptimization } from "../hooks/useMockOptimization";
+import { useOptimization } from "../hooks/useOptimization";
 
 import { useState } from "react";
 
@@ -31,10 +32,11 @@ export default function RecoveryPlanner({
   const {
     stage,
     result,
+    error,
     isRunning,
     run,
     reset,
-  } = useMockOptimization();
+  } = useOptimization();
 
   const selectedScenario = scenarios.find(
     (scenario) => scenario.id === selectedScenarioId,
@@ -74,7 +76,7 @@ export default function RecoveryPlanner({
 
         <button
           type="button"
-          onClick={run}
+          onClick={() => run(selectedScenarioId)}
           disabled={isRunning}
           className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
         >
@@ -88,7 +90,32 @@ export default function RecoveryPlanner({
 
         {isRunning && <OptimizationProgress stage={stage} />}
 
-        {!isRunning && !result && (
+        {error && !isRunning && (
+          <div className="mt-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 sm:p-5">
+            <AlertTriangle
+              size={22}
+              className="mt-0.5 shrink-0 text-red-600"
+            />
+            <div className="min-w-0">
+              <h3 className="font-semibold text-red-800">
+                Optimization failed
+              </h3>
+              <p className="mt-1 break-words text-sm text-red-700">
+                {error}
+              </p>
+              <button
+                type="button"
+                onClick={() => run(selectedScenarioId)}
+                className="mt-3 inline-flex items-center gap-2 rounded-lg border border-red-300 bg-white px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+              >
+                <RotateCcw size={15} />
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {!isRunning && !result && !error && (
           <div className="mt-6 flex min-h-52 flex-col items-center justify-center rounded-lg border border-dashed border-border px-5 py-8 text-center">
             <div className="rounded-full bg-slate-100 p-3 text-secondary">
               <ShieldCheck size={23} />
@@ -97,8 +124,9 @@ export default function RecoveryPlanner({
               No optimization run yet
             </h3>
             <p className="mt-2 max-w-md text-sm leading-6 text-secondary">
-              Select a scenario and run the demo to see the proposed
-              timetable, constraint checks, and evaluation metrics.
+              Select a scenario and run the optimization to see the
+              proposed timetable, constraint checks, and evaluation
+              metrics.
             </p>
           </div>
         )}
@@ -107,13 +135,22 @@ export default function RecoveryPlanner({
           <div className="mt-6 min-w-0 space-y-6">
             <div className="flex flex-col gap-3 rounded-xl border border-border bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-3">
-                <CheckCircle2
-                  size={22}
-                  className="mt-0.5 shrink-0 text-emerald-600"
-                />
+                {result.status === "infeasible" ? (
+                  <AlertTriangle
+                    size={22}
+                    className="mt-0.5 shrink-0 text-red-600"
+                  />
+                ) : (
+                  <CheckCircle2
+                    size={22}
+                    className="mt-0.5 shrink-0 text-emerald-600"
+                  />
+                )}
                 <div>
                   <h3 className="font-semibold text-foreground">
-                    Demo run completed
+                    {result.status === "infeasible"
+                      ? "Recovery plan generated (infeasible)"
+                      : "Recovery plan ready"}
                   </h3>
                   <p className="mt-1 text-sm text-secondary">
                     Scenario: {selectedScenario?.name}
@@ -121,7 +158,13 @@ export default function RecoveryPlanner({
                 </div>
               </div>
 
-              <span className="w-fit rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium capitalize text-foreground">
+              <span
+                className={`w-fit rounded-full border px-3 py-1.5 text-xs font-medium capitalize ${
+                  result.status === "infeasible"
+                    ? "border-red-200 bg-red-50 text-red-700"
+                    : "border-border bg-white text-foreground"
+                }`}
+              >
                 {result.status} solution
               </span>
             </div>
