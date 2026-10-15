@@ -5,7 +5,11 @@ simulation run (see `Wild Bugs.md` "Results and audit records").
 """
 from __future__ import annotations
 
+<<<<<<< HEAD
 from pydantic import BaseModel, Field
+=======
+from pydantic import BaseModel
+>>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
 
 
 class Metrics(BaseModel):
@@ -18,6 +22,7 @@ class Metrics(BaseModel):
 
 
 class ValidationReport(BaseModel):
+<<<<<<< HEAD
     """Independent validation result.
 
     ``feasible`` is true only when there are no hard violations *and* no
@@ -31,6 +36,11 @@ class ValidationReport(BaseModel):
     hard_violation_count: int
     violations: list[dict] = Field(default_factory=list)
     unverified_constraints: list[dict] = Field(default_factory=list)
+=======
+    feasible: bool
+    hard_violation_count: int
+    violations: list[dict] = []
+>>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
 
 
 class RunResult(BaseModel):

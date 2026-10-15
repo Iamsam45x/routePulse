@@ -20,12 +20,16 @@ def create_app():
     def health() -> dict[str, str]:
         return {"status": "ok"}
 
+<<<<<<< HEAD
     # Independent constraint validator: POST /api/v1/validate.
     from app.api.validation import router as validation_router  # noqa: PLC0415
 
     app.include_router(validation_router)
 
     # TODO(api): mount the remaining routers and expose POST /api/v1/prediction.
+=======
+    # TODO(api): mount routers and expose POST /api/v1/prediction.
+>>>>>>> 5fd910e332bd2dd15be8e0bad5e9bf0fa44b5a52
     return app
 
 
