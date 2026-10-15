@@ -279,9 +279,7 @@ export default function CampusMap({
 }: CampusMapProps) {
   const [selectedRouteId, setSelectedRouteId] = useState("all");
 
-  const selectedRoute = routes.find(
-    (route) => route.id === selectedRouteId,
-  );
+
 
   
   const visibleStops = useMemo(
