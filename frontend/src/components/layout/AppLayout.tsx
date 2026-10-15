@@ -46,7 +46,9 @@ export default function AppLayout() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
+    
+<div className="flex h-screen overflow-hidden bg-background text-foreground">
+
       <Sidebar
         activePage={activePage}
         isOpen={isSidebarOpen}
@@ -54,8 +56,8 @@ export default function AppLayout() {
         onNavigate={handleNavigate}
       />
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-18 shrink-0 items-center gap-3 border-b border-border bg-white px-4 sm:px-6 lg:px-8">
+<div className="flex min-h-0 min-w-0 flex-1 flex-col">
+  <header className="sticky top-0 z-30 flex h-18 shrink-0 items-center gap-3 border-b border-border bg-white px-4 sm:px-6 lg:px-8">
           <button
             type="button"
             aria-label="Open navigation menu"
@@ -129,7 +131,7 @@ export default function AppLayout() {
             )}
           </div>
         </header>
-<main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+  <main className="min-h-0 min-w-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           <div className="mb-6">
             <h1 className="text-2xl font-semibold tracking-tight">
               {activeItem?.label ?? "Operations"}

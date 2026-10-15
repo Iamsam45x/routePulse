@@ -238,7 +238,7 @@ function MapControls({ allStops, onReset }: MapControlsProps) {
   }
 
   return (
-    <div className="absolute right-3 top-3 z-[1000] flex flex-col gap-1">
+    <div className="absolute right-3 top-3 z-10 flex flex-col gap-1">
       <button
         type="button"
         onClick={() => map.zoomIn()}
@@ -346,7 +346,9 @@ export default function CampusMap({
         </span>
       </div>
 
-      <div className="relative h-72 w-full overflow-hidden rounded-xl border border-border sm:h-80 lg:h-[420px]">
+      
+<div className="relative isolate z-0 h-72 w-full overflow-hidden rounded-xl border border-border sm:h-80 lg:h-105">
+
         <MapContainer
           center={networkMapConfig.center}
           zoom={networkMapConfig.zoom}
