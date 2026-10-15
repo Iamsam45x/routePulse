@@ -1,7 +1,7 @@
 
 import { useMemo, useState } from "react";
 
-import PerformanceLabHeader from "../components/performance-lab/PerformanceLabheader";
+import PerformanceLabHeader from "../components/performance-lab/PerformanceLabHeader";
 import PerformanceKpiCards from "../components/performance-lab/PerformanceKpiCards";
 import PerformanceComparison from "../components/performance-lab/PerformanceComparison";
 import PerformanceCharts from "../components/performance-lab/PerformanceCharts";
@@ -55,8 +55,6 @@ export default function PerformanceLab() {
 
   const metrics = selectedRun?.metrics;
 
-  const hasResults =
-    selectedRun?.status === "completed" && Boolean(metrics);
 
   return (
     <div className="min-w-0 space-y-6">

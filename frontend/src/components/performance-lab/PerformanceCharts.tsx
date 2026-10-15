@@ -46,13 +46,6 @@ export default function PerformanceCharts({
     },
   ];
 
-  const passengerData = [
-    {
-      category: "Passengers Served",
-      baseline: metrics.unservedPassengers.baseline,
-      optimized: metrics.unservedPassengers.optimized,
-    },
-  ];
 
   return (
     <section className="space-y-4">
