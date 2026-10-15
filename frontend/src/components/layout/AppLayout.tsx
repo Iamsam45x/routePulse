@@ -10,6 +10,7 @@ import OperationsPage from "../../pages/OperationPage";
 import { operationsMockData } from "../../mocks/operations";
 import AlertItem from "../dashboard/AlertItem";
 import RecoveryPlanner from "../../pages/RecoveryPlanner";
+import PerformanceLab from "../../pages/PerformanceLab";
 
 export default function AppLayout() {
   const [activePage, setActivePage] = useState<PageId>("operations");
@@ -154,11 +155,7 @@ export default function AppLayout() {
     onViewPerformance={() => handleNavigate("performance-lab")}
   />
 ) : (
-  <div className="rounded-lg border border-border bg-white p-6">
-    <p className="text-sm text-muted-foreground">
-      Performance Lab page content will be implemented here.
-    </p>
-  </div>
+  <PerformanceLab />
 )}
 
         </main>
